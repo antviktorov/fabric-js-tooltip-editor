@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tooltip Editor</title>
+
+    <!-- Tooltip Editor CSS -->
+    <link rel="stylesheet" type="text/css" href="css/editor.css">
+</head>
+<body>
+
+<div class="content">
+    <div id="canvas-container">
+        <canvas id="tooltip-canvas" width="800" height="600"></canvas>
+    </div>
+</div>
+<script type="text/javascript" src="js/bundle.js"></script>
+<!-- fonts -->
+<script>
+    WebFontConfig = {
+        google: {
+            families: ['Actor', 'Amaranth', 'Amatic SC', 'Amiri', 'Antic', 'Anton', 'Arapey', 'Architects Daughter', 'Archivo Black', 'Arimo', 'Audiowide', 'Bad Script', 'Bangers', 'BenchNine', 'Bitter', 'Black Ops One', 'Candal', 'Chewy', 'Cinzel', 'Cookie', 'Covered By Your Grace', 'Damion', 'Dancing Script', 'Droid Serif', 'Enriqueta', 'Exo', 'Francois One', 'Fredoka One', 'Fugaz One', 'Indie Flower', 'Karla', 'Kaushan Script', 'Lato', 'Limelight', 'Lobster', 'Lobster Two', 'Lora', 'Luckiest Guy', 'Molengo', 'Monda', 'Montserrat', 'News Cycle', 'Open Sans', 'Orbitron', 'Oswald', 'Pacifico', 'Passion One', 'Paytone One', 'Permanent Marker', 'Playfair Display SC', 'Poiret One', 'Raleway', 'Roboto', 'Roboto Mono', 'Rock Salt', 'Russo One', 'Satisfy', 'Shadows Into Light', 'Sigmar One', 'Special Elite', 'Ubuntu', 'Varela Round', 'Vidaloka', 'Yanone Kaffeesatz']
+        },
+        fontactive: function (familyName, fvd) {
+            $(window).trigger("fontLoadedEvent", [familyName]);
+        },
+        active: function () {
+            $(window).trigger("allFontsLoadedEvent");
+        }
+    };
+
+    (function (d) {
+        var wf = d.createElement('script'), s = d.scripts[0];
+        wf.src = '//ajax.googleapis.com/ajax/libs/webfont/1.5.18/webfont.js';
+        s.parentNode.insertBefore(wf, s);
+    })(document);
+</script>
+
+</body>
+</html>

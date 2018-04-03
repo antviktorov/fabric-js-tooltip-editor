@@ -1,0 +1,38 @@
+@mixin hide {
+  visibility: hidden;
+  display: none;
+}
+
+html {
+  height: 100%;
+}
+
+body {
+  font-family: 'Roboto','Helvetica','Arial',sans-serif;
+  background-color: #EEEEEE;
+}
+
+.noselect {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.noshow {
+  @include hide;
+}
+
+#tooltip-canvas {
+  position: relative;
+  border: 1px solid #BBBBBB;
+  box-shadow: 2px 2px 2px #d7d7d7;
+}
+
+#canvas-container {
+  position: relative;
+  left: 0px;
+  top: 0px;
+}
