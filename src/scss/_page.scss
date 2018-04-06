@@ -8,8 +8,8 @@ html {
 }
 
 body {
-  font-family: 'Roboto','Helvetica','Arial',sans-serif;
-  background-color: #EEEEEE;
+  font-family: $base-font;
+  background-color: $background-color;
 }
 
 .noselect {
@@ -27,12 +27,16 @@ body {
 
 #tooltip-canvas {
   position: relative;
-  border: 1px solid #BBBBBB;
-  box-shadow: 2px 2px 2px #d7d7d7;
+  //border: 1px solid #BBBBBB;
+  //box-shadow: 2px 2px 2px #d7d7d7;
+  background-color: #fff3cd;
 }
 
-#canvas-container {
+.canvas-container {
   position: relative;
-  left: 0px;
-  top: 0px;
+  overflow: hidden;
+}
+
+.sidebar-container {
+  background-color: #f8f9fa;
 }
