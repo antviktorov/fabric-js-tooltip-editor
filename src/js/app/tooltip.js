@@ -123,10 +123,21 @@ var ToolTip = function () {
             fill: color
         });
 
-        var group = new fabric.Group([roundRect].concat(triangles), {
+        var merged = [];
+        merged.push(roundRect)
+        merged.concat(triangles);
+
+        var text = new fabric.IText(options.text, {
+            fontFamily: 'arial white',
+            left: roundRect.left + 10,
+            top: roundRect.top,
+            fill: "white",
+        });
+
+        var group = new fabric.Group([roundRect].concat(triangles).concat([text]), {
             left: options.left,
             top: options.top,
-         });
+        });
 
          return group;
     };

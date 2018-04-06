@@ -106,13 +106,19 @@ gulp.task('x-copy', function () {
     var css = gulp.src(['src/css/lib/*.css'])
         .pipe(gulp.dest('build/css/lib'));
 
+    var bootstrapCss = gulp.src(['node_modules/bootstrap/dist/css/bootstrap.min.css'])
+        .pipe(gulp.dest('build/css/lib'));
+
     var js = gulp.src(['src/js/lib/*.js'])
+        .pipe(gulp.dest('build/js/lib'));
+
+    var bootstrapJs = gulp.src(['node_modules/bootstrap/dist/js/bootstrap.bundle.min.js'])
         .pipe(gulp.dest('build/js/lib'));
 
     var html = gulp.src(['src/html/*'])
         .pipe(gulp.dest('build'));
 
-    return merge(/*images,*/ css, js, html);
+    return merge(/*images,*/bootstrapCss, bootstrapJs, css, js, html);
 });
 
 // minify assets
@@ -137,7 +143,7 @@ gulp.task('clean', function () {
 
 // lint javascript
 gulp.task('lint', function () {
-    return gulp.src(['src/js/*.js', 'src/js/app/*.js', 'src/js/app/objects/*.js'], {base: 'src/js/'})
+    return gulp.src(['src/js/*.js', 'src/js/app/*.js'], {base: 'src/js/'})
         .pipe(jshint())
         .on('error', errorHandler)
         .pipe(jshint.reporter('default'));

@@ -10,6 +10,6 @@ $(function() {
 	global.canvas = new fabric.Canvas('tooltip-canvas');
 
 	var toolTip = new ToolTip();
-	var group = toolTip.createTop({top: 200, left: 100});
+	var group = toolTip.createTop({top: 200, left: 100, text: "Tooltip Hint"});
 	canvas.add(group);
 });
