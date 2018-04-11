@@ -5,6 +5,43 @@ var ToolTip = require('./tooltip.js');
 var utils = new (require('./fabricUtils.js'))();
 
 function init() {
+    disablePanel();
+}
+
+function disablePanel() {
+    $(".btn-arrow-postion > button").each(function() {
+        $(this).addClass("disabled");
+        $(this).addClass("disabled");
+    });
+    $(".btn-color").attr("disabled", "disabled");
+    $(".btn-settings > button").each(function() {
+        $(this).addClass("disabled");
+    });
+    $(".form-control").addClass("disabled");
+    $(".btn-remove").addClass("disabled");
+}
+
+function enablePanel() {
+    $(".btn-arrow-postion > button").each(function() {
+        $(this).removeClass("disabled");
+    });
+    $(".btn-color").removeClass("disabled");
+    $(".btn-settings > button").each(function() {
+        $(this).removeClass("disabled");
+
+    });
+    $(".form-control").removeClass("disabled");
+    $(".btn-remove").removeClass("disabled");
+}
+
+function initPanel() {
+    var toolTip = canvas.getActiveObject();
+    var triangle = (toolTip.getObjects())[1];
+    switch (triangle.triangle) {
+        case "top" :
+            $(".btn-arrow-postion > button:nth-child(3)").button('toogle');
+            break;
+    }
 }
 
 function deleteHandler() {
@@ -150,11 +187,12 @@ function listeners() {
     // Set event listeners
     canvas.on({
         "object:selected": function () {
-            //showActiveTools();
-            console.log("On select object");
+            console.log("select object");
+            enablePanel();
+            initPanel();
         },
         "selection:cleared": function () {
-            console.log("Object is deselected");
+            disablePanel();
         }
     });
 
