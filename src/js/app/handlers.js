@@ -11,13 +11,15 @@ function init() {
 function disablePanel() {
     $(".btn-arrow-postion > button").each(function() {
         $(this).addClass("disabled");
-        $(this).addClass("disabled");
+        $(this).removeClass("active");
     });
-    $(".btn-color").attr("disabled", "disabled");
+    $(".btn-color").addClass("disabled");
     $(".btn-settings > button").each(function() {
         $(this).addClass("disabled");
     });
-    $(".form-control").addClass("disabled");
+    $(".form-control").attr("disabled", "disabled");
+    $(".form-control").text("");
+
     $(".btn-remove").addClass("disabled");
 }
 
@@ -30,18 +32,29 @@ function enablePanel() {
         $(this).removeClass("disabled");
 
     });
-    $(".form-control").removeClass("disabled");
+    $(".form-control").removeAttr("disabled");
     $(".btn-remove").removeClass("disabled");
 }
 
 function initPanel() {
     var toolTip = canvas.getActiveObject();
     var triangle = (toolTip.getObjects())[1];
+    var caption = (toolTip.getObjects())[2];
     switch (triangle.triangle) {
+        case "left" :
+            $(".btn-arrow-postion > button:nth-child(1)").addClass('active');
+            break;
+        case "right" :
+            $(".btn-arrow-postion > button:nth-child(2)").addClass('active');
+            break;
         case "top" :
-            $(".btn-arrow-postion > button:nth-child(3)").button('toogle');
+            $(".btn-arrow-postion > button:nth-child(3)").addClass('active');
+            break;
+        case "bottom" :
+            $(".btn-arrow-postion > button:nth-child(4)").addClass('active');
             break;
     }
+    $(".form-control").text(caption.text);
 }
 
 function deleteHandler() {
@@ -60,128 +73,6 @@ function deleteHandler() {
     });
 
 }
-
-/*function rightClick() {
- // Setup right-click context menu
- $.contextMenu({
- selector: '#content',
- trigger: 'right',
- animation: { duration: 0 },
- callback: function(itemKey, opt){
- if (itemKey === "delete") {
- utils.deleteSelected();
- } else if (itemKey === "forward") {
- utils.sendForward();
- } else if (itemKey === "front") {
- utils.sendToFront();
- } else if (itemKey === "backward") {
- utils.sendBackward();
- } else if (itemKey === "back") {
- utils.sendToBack();
- } else if (itemKey === "clone") {
- utils.clone();
- }
- },
- items: {
- "forward": {name: "Bring Forward"},
- "front": {name: "Bring to Front"},
- "backward": {name: "Send Backward"},
- "back": {name: "Send to Back"},
- "sep1": "---------",
- "clone": {name: "Clone"},
- "sep2": "---------",
- "delete": {name: "Delete"}
- }
- });
-
- // Bind right-click menu
- $('#content').on('contextmenu.custom', function (e) {
- var target = canvas.findTarget(e.e);
- if (target !== null && target !== undefined) {
- canvas.setActiveObject(target);
- return true;
- }
- return false;
- });
- }*/
-
-/*function showCurrentFont() {
- var font = toTitleCase(utils.getFont());
- if (font.length > 9) {
- font = font.substring(0,10) + "...";
- }
- $("#current-font").text(font);
- }*/
-
-/*function showActiveTools() {
- if (isAppLoading === true) {
- return;
- }
-
- var tools = $("#active-tools");
- var obj = canvas.getActiveObject();
-
- if (canvas.getActiveObjects() !== null && canvas.getActiveObjects() !== undefined) {
- $("#active-tools > div").addClass("noshow");
- tools.removeClass("noshow");
- $("div.group", tools).removeClass("noshow");
- } else if (obj !== null && obj !== undefined) {
- $("#active-tools > div").addClass("noshow");
- tools.removeClass("noshow");
-
- var type = canvas.getActiveObject().type;
- if (type === "i-text") {
- $("div.text", tools).removeClass("noshow");
-
- if (text.isBold(obj)) {
- $("#toolbar-bold").addClass("toolbar-item-active");
- } else {
- $("#toolbar-bold").removeClass("toolbar-item-active");
- }
-
- if (text.isItalics(obj)) {
- $("#toolbar-italics").addClass("toolbar-item-active");
- } else {
- $("#toolbar-italics").removeClass("toolbar-item-active");
- }
-
- if (text.isUnderline(obj)) {
- $("#toolbar-underline").addClass("toolbar-item-active");
- } else {
- $("#toolbar-underline").removeClass("toolbar-item-active");
- }
-
- showCurrentFont();
-
- } else if (type === "svg") {
- $("div.svg", tools).removeClass("noshow");
- } else {
- $("div.shape", tools).removeClass("noshow");
- }
-
- // Init fill color picker
- page.fillColorPicker();
- var color = utils.getFillColor();
- if (color && color !== "") {
- $("#toolbar-fill-color").spectrum("set", color);
- }
-
- // Init outline color picker
- page.outlineColorPicker();
- var outlineColor = utils.getOutlineColor();
- if (outlineColor && outlineColor !== "") {
- $("#toolbar-outline-color").spectrum("set", outlineColor);
- }
-
- // Shadow and glow
- setCurrentShadowValues();
- page.glowColorPicker();
- page.shadowColorPicker();
-
- } else {
- hideActiveTools();
- }
- }*/
 
 function listeners() {
     // Set event listeners
@@ -306,3 +197,126 @@ function HandlersModule() {
 }
 
 module.exports = HandlersModule;
+
+
+/*function rightClick() {
+ // Setup right-click context menu
+ $.contextMenu({
+ selector: '#content',
+ trigger: 'right',
+ animation: { duration: 0 },
+ callback: function(itemKey, opt){
+ if (itemKey === "delete") {
+ utils.deleteSelected();
+ } else if (itemKey === "forward") {
+ utils.sendForward();
+ } else if (itemKey === "front") {
+ utils.sendToFront();
+ } else if (itemKey === "backward") {
+ utils.sendBackward();
+ } else if (itemKey === "back") {
+ utils.sendToBack();
+ } else if (itemKey === "clone") {
+ utils.clone();
+ }
+ },
+ items: {
+ "forward": {name: "Bring Forward"},
+ "front": {name: "Bring to Front"},
+ "backward": {name: "Send Backward"},
+ "back": {name: "Send to Back"},
+ "sep1": "---------",
+ "clone": {name: "Clone"},
+ "sep2": "---------",
+ "delete": {name: "Delete"}
+ }
+ });
+
+ // Bind right-click menu
+ $('#content').on('contextmenu.custom', function (e) {
+ var target = canvas.findTarget(e.e);
+ if (target !== null && target !== undefined) {
+ canvas.setActiveObject(target);
+ return true;
+ }
+ return false;
+ });
+ }*/
+
+/*function showCurrentFont() {
+ var font = toTitleCase(utils.getFont());
+ if (font.length > 9) {
+ font = font.substring(0,10) + "...";
+ }
+ $("#current-font").text(font);
+ }*/
+
+/*function showActiveTools() {
+ if (isAppLoading === true) {
+ return;
+ }
+
+ var tools = $("#active-tools");
+ var obj = canvas.getActiveObject();
+
+ if (canvas.getActiveObjects() !== null && canvas.getActiveObjects() !== undefined) {
+ $("#active-tools > div").addClass("noshow");
+ tools.removeClass("noshow");
+ $("div.group", tools).removeClass("noshow");
+ } else if (obj !== null && obj !== undefined) {
+ $("#active-tools > div").addClass("noshow");
+ tools.removeClass("noshow");
+
+ var type = canvas.getActiveObject().type;
+ if (type === "i-text") {
+ $("div.text", tools).removeClass("noshow");
+
+ if (text.isBold(obj)) {
+ $("#toolbar-bold").addClass("toolbar-item-active");
+ } else {
+ $("#toolbar-bold").removeClass("toolbar-item-active");
+ }
+
+ if (text.isItalics(obj)) {
+ $("#toolbar-italics").addClass("toolbar-item-active");
+ } else {
+ $("#toolbar-italics").removeClass("toolbar-item-active");
+ }
+
+ if (text.isUnderline(obj)) {
+ $("#toolbar-underline").addClass("toolbar-item-active");
+ } else {
+ $("#toolbar-underline").removeClass("toolbar-item-active");
+ }
+
+ showCurrentFont();
+
+ } else if (type === "svg") {
+ $("div.svg", tools).removeClass("noshow");
+ } else {
+ $("div.shape", tools).removeClass("noshow");
+ }
+
+ // Init fill color picker
+ page.fillColorPicker();
+ var color = utils.getFillColor();
+ if (color && color !== "") {
+ $("#toolbar-fill-color").spectrum("set", color);
+ }
+
+ // Init outline color picker
+ page.outlineColorPicker();
+ var outlineColor = utils.getOutlineColor();
+ if (outlineColor && outlineColor !== "") {
+ $("#toolbar-outline-color").spectrum("set", outlineColor);
+ }
+
+ // Shadow and glow
+ setCurrentShadowValues();
+ page.glowColorPicker();
+ page.shadowColorPicker();
+
+ } else {
+ hideActiveTools();
+ }
+ }*/
