@@ -127,7 +127,7 @@ var ToolTip = function () {
         merged.push(roundRect)
         merged.concat(triangles);
 
-        var text = new fabric.IText(options.text, {
+        var text = new fabric.Text(options.text, {
             fontFamily: 'arial white',
             left: roundRect.left + 10,
             top: roundRect.top,

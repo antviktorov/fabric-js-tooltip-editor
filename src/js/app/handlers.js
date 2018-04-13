@@ -21,6 +21,7 @@ function disablePanel() {
     $(".form-control").text("");
 
     $(".btn-remove").addClass("disabled");
+    $(".form-control").val("");
 }
 
 function enablePanel() {
@@ -34,6 +35,13 @@ function enablePanel() {
     });
     $(".form-control").removeAttr("disabled");
     $(".btn-remove").removeClass("disabled");
+
+    $(".form-control").on("keyup", function (e) {
+        var toolTip = canvas.getActiveObject();
+        var caption = (toolTip.getObjects())[2];
+        caption.set("text", e.target.value);
+        canvas.renderAll();
+    });
 }
 
 function initPanel() {
@@ -54,7 +62,7 @@ function initPanel() {
             $(".btn-arrow-postion > button:nth-child(4)").addClass('active');
             break;
     }
-    $(".form-control").text(caption.text);
+    $(".form-control").val(caption.text);
 }
 
 function deleteHandler() {
@@ -78,8 +86,10 @@ function listeners() {
     // Set event listeners
     canvas.on({
         "object:selected": function () {
-            console.log("select object");
             enablePanel();
+            initPanel();
+        },
+        "selection:updated": function () {
             initPanel();
         },
         "selection:cleared": function () {
