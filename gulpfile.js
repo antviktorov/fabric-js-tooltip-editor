@@ -109,6 +109,9 @@ gulp.task('x-copy', function () {
     var bootstrapCss = gulp.src(['node_modules/bootstrap/dist/css/bootstrap.min.css'])
         .pipe(gulp.dest('build/css/lib'));
 
+    var bootstrapColorPicker = gulp.src(['node_modules/bootstrap-colorpicker/dist/css/bootstrap-colorpicker.min.css'])
+        .pipe(gulp.dest('build/css/lib'));
+
     var js = gulp.src(['src/js/lib/*.js'])
         .pipe(gulp.dest('build/js/lib'));
 
@@ -118,7 +121,7 @@ gulp.task('x-copy', function () {
     var html = gulp.src(['src/html/*'])
         .pipe(gulp.dest('build'));
 
-    return merge(/*images,*/bootstrapCss, bootstrapJs, css, js, html);
+    return merge(/*images,*/bootstrapCss, bootstrapColorPicker, bootstrapJs, css, js, html);
 });
 
 // minify assets

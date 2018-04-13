@@ -9,12 +9,12 @@ function init() {
 }
 
 function disablePanel() {
-    $(".btn-arrow-postion > button").each(function() {
+    $(".btn-arrow-postion > button").each(function () {
         $(this).addClass("disabled");
         $(this).removeClass("active");
     });
     $(".btn-color").addClass("disabled");
-    $(".btn-settings > button").each(function() {
+    $(".btn-settings > button").each(function () {
         $(this).addClass("disabled");
     });
     $(".form-control").attr("disabled", "disabled");
@@ -22,14 +22,16 @@ function disablePanel() {
 
     $(".btn-remove").addClass("disabled");
     $(".form-control").val("");
+
+    $(".btn-color").colorpicker("destroy");
 }
 
 function enablePanel() {
-    $(".btn-arrow-postion > button").each(function() {
+    $(".btn-arrow-postion > button").each(function () {
         $(this).removeClass("disabled");
     });
     $(".btn-color").removeClass("disabled");
-    $(".btn-settings > button").each(function() {
+    $(".btn-settings > button").each(function () {
         $(this).removeClass("disabled");
 
     });
@@ -42,6 +44,25 @@ function enablePanel() {
         caption.set("text", e.target.value);
         canvas.renderAll();
     });
+
+    $(".btn-color")
+        .colorpicker({debug: true})
+        .on('changeColor', function (e) {
+
+            var color = e.color.toHex();
+
+            $(".btn-color").css("background-color", color);
+            $(".btn-color").css("border-color", color);
+
+            var toolTip = canvas.getActiveObject();
+            var triangle = (toolTip.getObjects())[0];
+            var rect = (toolTip.getObjects())[1];
+
+            triangle.set({fill: color});
+            rect.set({fill: color});
+
+            canvas.renderAll();
+        });
 }
 
 function initPanel() {
