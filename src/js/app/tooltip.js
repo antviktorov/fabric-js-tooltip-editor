@@ -6,7 +6,7 @@ var ToolTip = function () {
     var rectDefaultHalfWidth = rectDefaultWidth * 0.5;
     var rectDefaultHeight = 200;
     var rectDefaultHalfHeight = rectDefaultHeight * 0.5;
-    var color = "green";
+    var defaultColor = "#0075a7";
     var angle = 10;
     var triangles = [];
     var availablePositions = ["left", "right", "top", "bottom"];
@@ -75,7 +75,7 @@ var ToolTip = function () {
             width: triangleWidth,
             height: triangleHeight,
         });
-        triangle.set({fill: color});
+        triangle.set({fill: defaultColor});
 
         switch (position) {
             case "top" :
@@ -120,7 +120,7 @@ var ToolTip = function () {
             height: this._calculateRectHeight(),
             rx: angle,
             ry: angle,
-            fill: color
+            fill: defaultColor
         });
 
         var merged = [];

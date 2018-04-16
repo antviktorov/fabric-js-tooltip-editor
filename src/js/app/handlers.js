@@ -84,6 +84,13 @@ function initPanel() {
             break;
     }
     $(".form-control").val(caption.text);
+
+    //Set button color the same as
+    var color = triangle.get("fill");
+
+    $(".btn-color").css("background-color", color);
+    $(".btn-color").css("border-color", color);
+    console.log(color);
 }
 
 function deleteHandler() {

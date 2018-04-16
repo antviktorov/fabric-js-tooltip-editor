@@ -40,3 +40,9 @@ body {
 .sidebar-container {
   background-color: #f8f9fa;
 }
+
+.btn-color {
+  color: #fff;
+  background-color: $button-default-color;
+  border-color: $button-default-color;
+}
