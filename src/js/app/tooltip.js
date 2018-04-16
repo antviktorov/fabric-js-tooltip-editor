@@ -137,6 +137,7 @@ var ToolTip = function () {
         var group = new fabric.Group([roundRect].concat(triangles).concat([text]), {
             left: options.left,
             top: options.top,
+            lockUniScaling: true
         });
 
          return group;
