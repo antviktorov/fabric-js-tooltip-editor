@@ -104,8 +104,10 @@ function initPanel() {
     deactivateAling();
     $(".btn-align-" + objects.caption.get("textAlign")).addClass('active');
 
-    //Text weight
-
+    //Text style
+    if (objects.caption.get('fontStyle') === "bold" ) {
+        $(".btn-style-bold").addClass('active');
+    }
 }
 
 function deleteHandler() {
@@ -129,6 +131,25 @@ function deactivateAling() {
     $(".btn-align").each(function() {
         $(this).removeClass("active");
     });
+}
+
+function deactivateStyle() {
+    $(".btn-style").each(function() {
+        $(this).removeClass("active");
+    });
+}
+
+function toogleStyle(object, style) {
+    var objects = getSplitActiveObject();
+
+    if ($(object).hasClass('active')) {
+        objects.caption.set({fontStyle: 'normal'});
+        deactivateStyle();
+    } else {
+        objects.caption.set({fontStyle: style});
+        deactivateStyle();
+        $(object).addClass('active')
+    }
 }
 
 function listeners() {
@@ -161,17 +182,37 @@ function listeners() {
         if ($(this).hasClass("btn-align-left")) {
             objects.caption.set({textAlign: 'left'});
             deactivateAling();
+            $(this).addClass("active");
         }
         if ($(this).hasClass("btn-align-center")) {
             objects.caption.set({textAlign: 'center'});
             deactivateAling();
+            $(this).addClass("active");
         }
         if ($(this).hasClass('btn-align-right')) {
             objects.caption.set({textAlign: 'right'});
             deactivateAling();
+            $(this).addClass("active");
         }
 
-        $(this).addClass("active");
+        if ($(this).hasClass('btn-style-bold')) {
+            toogleStyle(this, 'bold');
+        }
+
+        if ($(this).hasClass('btn-style-italic')) {
+            toogleStyle(this, 'italic');
+        }
+
+        if ($(this).hasClass('btn-underline')) {
+            if ($(this).hasClass('active')) {
+                objects.caption.set({underline: false})
+                $(this).removeClass('active')
+            } else {
+                objects.caption.set({underline: true})
+                $(this).addClass('active')
+            }
+        }
+
         canvas.renderAll();
     });
 
