@@ -10,6 +10,8 @@ var ToolTip = function () {
     var angle = 10;
     var triangles = [];
     var availablePositions = ["left", "right", "top", "bottom"];
+    var textPadding = 5;
+    var textSize = 20;
 
     this._calculateRectWidth = function() {
         var result = rectDefaultWidth;
@@ -113,6 +115,7 @@ var ToolTip = function () {
         triangles.push(triangle);
     };
     this._create = function(options) {
+        //TODO make height slightly more then text height
         var roundRect = new fabric.Rect({
             top: this._calculateRectTop(),
             left: this._calculateRectLeft(),
@@ -124,14 +127,18 @@ var ToolTip = function () {
         });
 
         var merged = [];
-        merged.push(roundRect)
+        merged.push(roundRect);
         merged.concat(triangles);
 
-        var text = new fabric.Text(options.text, {
+        var text = new fabric.Textbox(options.text, {
+            width: roundRect.width - textPadding * 2,
+            height: roundRect.height ,
+            top: roundRect.top + textPadding,
+            left: roundRect.left + textPadding,
+            fontSize: textSize,
+            textAlign: 'center',
             fontFamily: 'arial white',
-            left: roundRect.left + 10,
-            top: roundRect.top,
-            fill: "white",
+            fill: "white"
         });
 
         var group = new fabric.Group([roundRect].concat(triangles).concat([text]), {

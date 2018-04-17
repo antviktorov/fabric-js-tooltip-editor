@@ -67,7 +67,7 @@ gulp.task('x-webserver', function () {
 gulp.task('x-watch', function () {
     gulp.watch('src/js/*.js', ['lint', 'x-browserify']);
     gulp.watch('src/js/app/*.js', ['lint', 'x-browserify']);
-    gulp.watch('src/js/app/objects/*.js', ['lint', 'x-browserify']);
+    gulp.watch('src/js/app/fabric/*.js', ['lint', 'x-browserify']);
     gulp.watch('src/scss/*.scss', ['x-sass']);
     gulp.watch('src/js/config/*.js', ['x-js-config']);
     gulp.watch([
