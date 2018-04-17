@@ -34,6 +34,8 @@ function disablePanel() {
     $(".form-control").val("");
 
     $(".btn-color").colorpicker("destroy");
+
+    deactivateAling();
 }
 
 function enablePanel() {
@@ -99,15 +101,8 @@ function initPanel() {
     $(".btn-color").css("border-color", color);
 
     //Text align
-    console.log(objects.caption.textAlign);
-    switch (objects.caption.textAlign) {
-        case "left" :
-            break;
-        case "right" :
-            break;
-        case "center" :
-            break;
-    }
+    deactivateAling();
+    $(".btn-align-" + objects.caption.get("textAlign")).addClass('active');
 
     //Text weight
 
@@ -128,6 +123,12 @@ function deleteHandler() {
         }
     });
 
+}
+
+function deactivateAling() {
+    $(".btn-align").each(function() {
+        $(this).removeClass("active");
+    });
 }
 
 function listeners() {
@@ -155,8 +156,23 @@ function listeners() {
         console.log("Arrow click!");
     });
 
-    $(".btn-settings").on("click", function () {
-        console.log($(this));
+    $(".btn-settings > button").on("click", function () {
+        var objects = getSplitActiveObject();
+        if ($(this).hasClass("btn-align-left")) {
+            objects.caption.set({textAlign: 'left'});
+            deactivateAling();
+        }
+        if ($(this).hasClass("btn-align-center")) {
+            objects.caption.set({textAlign: 'center'});
+            deactivateAling();
+        }
+        if ($(this).hasClass('btn-align-right')) {
+            objects.caption.set({textAlign: 'right'});
+            deactivateAling();
+        }
+
+        $(this).addClass("active");
+        canvas.renderAll();
     });
 
     $(".btn-remove").on("click", function () {
