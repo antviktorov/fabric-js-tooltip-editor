@@ -72,6 +72,7 @@ function enablePanel() {
 }
 
 function initPanel() {
+    //Set triangle position
     var objects = getSplitActiveObject();
     switch (objects.triangle.triangle) {
         case "left" :
@@ -87,13 +88,29 @@ function initPanel() {
             $(".btn-arrow-postion > button:nth-child(4)").addClass('active');
             break;
     }
+    //Set text value
     $(".form-control").val(objects.caption.text);
 
     //Set button color the same as
     var color = objects.triangle.get("fill");
 
+    //Color button
     $(".btn-color").css("background-color", color);
     $(".btn-color").css("border-color", color);
+
+    //Text align
+    console.log(objects.caption.textAlign);
+    switch (objects.caption.textAlign) {
+        case "left" :
+            break;
+        case "right" :
+            break;
+        case "center" :
+            break;
+    }
+
+    //Text weight
+
 }
 
 function deleteHandler() {
@@ -139,7 +156,7 @@ function listeners() {
     });
 
     $(".btn-settings").on("click", function () {
-        console.log("Settings click!");
+        console.log($(this));
     });
 
     $(".btn-remove").on("click", function () {
