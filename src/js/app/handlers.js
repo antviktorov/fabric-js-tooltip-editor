@@ -177,8 +177,29 @@ function listeners() {
 
     $(".btn-add").on("click", function () {
         var toolTip = new ToolTip();
-        var group = toolTip.createTop({top: 200, left: 100, text: "Tooltip Hint"});
-        canvas.add(group);
+        var group;
+
+        var defaultText = "Tooltip Hint";
+
+        if ($(this).hasClass("btn-add-top")) {
+            group = toolTip.createTop({top: 200, left: 100, text: defaultText});
+        }
+
+        if ($(this).hasClass("btn-add-down")) {
+            group = toolTip.createBottom({top: 200, left: 100, text: defaultText});
+        }
+
+        if ($(this).hasClass("btn-add-left")) {
+            group = toolTip.createLeft({top: 200, left: 100, text: defaultText});
+        }
+
+        if ($(this).hasClass("btn-add-right")) {
+            group = toolTip.createRight({top: 200, left: 100, text: defaultText});
+        }
+
+        if (group) {
+            canvas.add(group);
+        }
     });
 
     $(".btn-arrow-postion").on("click", function () {

@@ -137,7 +137,7 @@ var ToolTip = function () {
             left: roundRect.left + textPadding,
             fontSize: textSize,
             textAlign: 'center',
-            fontFamily: 'arial white',
+            fontFamily: 'arial',
             fill: "white"
         });
 
