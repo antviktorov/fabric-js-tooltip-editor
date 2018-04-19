@@ -160,18 +160,34 @@ function toogleStyle(object, style) {
     }
 }
 
+function showTextarea() {
+    $(".text-container").show(500); /*.animate({
+        opacity: 1,
+        height: "100%"
+    }, 1000);*/
+}
+
+function hideTextarea() {
+    $(".text-container").hide(500); /*.animate({
+        opacity: 0,
+        height: "0%"
+    }, 500);*/
+}
+
 function listeners() {
     // Set event listeners
     canvas.on({
         "object:selected": function () {
             enablePanel();
             initPanel();
+            showTextarea();
         },
         "selection:updated": function () {
             initPanel();
         },
         "selection:cleared": function () {
             disablePanel();
+            hideTextarea();
         }
     });
 
@@ -202,11 +218,7 @@ function listeners() {
         }
     });
 
-    $(".btn-arrow-postion").on("click", function () {
-        console.log("Arrow click!");
-    });
-
-    $(".btn-settings > button").on("click", function () {
+    $(".btn-settings").on("click", function () {
         var objects = getSplitActiveObject();
         if ($(this).hasClass("btn-align-left")) {
             objects.caption.set({textAlign: 'left'});

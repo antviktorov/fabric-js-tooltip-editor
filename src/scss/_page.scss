@@ -1,5 +1,4 @@
 @mixin hide {
-  visibility: hidden;
   display: none;
 }
 
@@ -44,10 +43,6 @@ body {
   }
 }
 
-.sidebar-container {
-  background-color: #f8f9fa;
-}
-
 .btn-color {
   color: #fff;
   background-color: $button-default-color;
@@ -58,6 +53,7 @@ body {
   max-width: 547px;
   margin: 10px auto 10px auto;
   .text-container {
+    @include hide;
     max-width: 547px;
   }
 }
