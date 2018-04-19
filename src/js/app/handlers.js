@@ -105,8 +105,16 @@ function initPanel() {
     $(".btn-align-" + objects.caption.get("textAlign")).addClass('active');
 
     //Text style
+    deactivateStyle();
     if (objects.caption.get('fontStyle') === "bold" ) {
         $(".btn-style-bold").addClass('active');
+    }
+
+    //Underline
+    if (objects.caption.get('underline')) {
+        $(".btn-underline").addClass('active');
+    } else {
+        $(".btn-underline").removeClass('active');
     }
 }
 
