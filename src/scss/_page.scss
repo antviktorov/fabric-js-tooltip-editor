@@ -26,15 +26,22 @@ body {
 }
 
 #tooltip-canvas {
-  position: relative;
-  //border: 1px solid #BBBBBB;
-  //box-shadow: 2px 2px 2px #d7d7d7;
   background-color: #fff3cd;
+  width: $defaultWidth;
+  height: $defaultHeight;
 }
 
-.canvas-container {
-  position: relative;
-  overflow: hidden;
+.canvas-wrapper-container {
+  overflow: scroll;
+  max-width: $defaultWidth;
+  max-height: $defaultHeight;
+  margin: 0 auto 0 auto;
+  padding: 0;
+  border: 1px solid #BBBBBB;
+  box-shadow: 2px 2px 10px #d7d7d7;
+  .canvas-container {
+    margin: 0 auto 0 auto;
+  }
 }
 
 .sidebar-container {
@@ -45,4 +52,12 @@ body {
   color: #fff;
   background-color: $button-default-color;
   border-color: $button-default-color;
+}
+
+.top-panel-container {
+  max-width: 547px;
+  margin: 10px auto 10px auto;
+  .text-container {
+    max-width: 547px;
+  }
 }
