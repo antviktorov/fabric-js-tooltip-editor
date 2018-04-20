@@ -2,9 +2,9 @@ var ToolTip = function () {
     "use strict";
     var triangleWidth = 20;
     var triangleHeight = 30;
-    var rectDefaultWidth = 300;
+    var rectDefaultWidth = 200;
     var rectDefaultHalfWidth = rectDefaultWidth * 0.5;
-    var rectDefaultHeight = 200;
+    var rectDefaultHeight = 100;
     var rectDefaultHalfHeight = rectDefaultHeight * 0.5;
     var defaultColor = "#0075a7";
     var angle = 10;
@@ -12,25 +12,8 @@ var ToolTip = function () {
     var availablePositions = ["left", "right", "top", "bottom"];
     var textPadding = 5;
     var textSize = 20;
+    var roundRect;
 
-    this._calculateRectWidth = function() {
-        var result = rectDefaultWidth;
-        for (var i = 0; i < triangles.length; i++) {
-            if (triangles[i].triangle == "left" || triangles[i].triangle == "right") {
-                result -= triangleHeight;
-            }
-        }
-        return result;
-    };
-    this._calculateRectHeight = function() {
-        var result = rectDefaultHeight;
-        for (var i = 0; i < triangles.length; i++) {
-            if (triangles[i].triangle == "top" || triangles[i].triangle == "bottom") {
-                result -= triangleHeight;
-            }
-        }
-        return result;
-    };
     this._calculateRectTop = function() {
         for (var i = 0; i < triangles.length; i++) {
             if (triangles[i].triangle == "top") {
@@ -53,7 +36,7 @@ var ToolTip = function () {
         var angle = obj.angle + angleOffset;
 
         if ((obj.originX !== 'center' || obj.originY !== 'center') && obj.centeredRotation) {
-            obj.setOriginToCenter && obj.setOriginToCenter();
+            obj.setOriginToCenter();
             resetOrigin = true;
         }
 
@@ -63,10 +46,32 @@ var ToolTip = function () {
         obj.setCoords();
 
         if (resetOrigin) {
-            obj.setCenterToOrigin && obj.setCenterToOrigin();
+            obj.setCenterToOrigin();
         }
 
         canvas.renderAll();
+    };
+    this.alingTextVertically = function(text) {
+        text.top = roundRect.top + roundRect.height * 0.5 - text.height * 0.5;
+    };
+    this._textChanged = function(e) {
+        var text = e.target;
+        //Decrease font size
+        if (text.height > roundRect.height) {
+            text.fontSize *= roundRect.height / (text.height + textPadding);
+            text.height = roundRect.height - textPadding * 2;
+            return;
+        }
+
+        //Increase font size
+        if (text.fontSize < textSize) {
+            text.fontSize *= roundRect.height / (text.height + textPadding);
+        }
+
+        //Make text at the center of a rect
+        if (text.height < roundRect.height) {
+            text.top = roundRect.top + roundRect.height * 0.5 - text.height * 0.5;
+        }
     };
     this.addTriangle = function (position) {
         if (availablePositions.indexOf(position) == -1) {
@@ -91,14 +96,14 @@ var ToolTip = function () {
                 this._rotateObject(triangle, 180);
                 triangle.set({
                     left: rectDefaultHalfWidth + triangleWidth * 0.5,
-                    top: rectDefaultHeight,
+                    top: rectDefaultHeight + triangleHeight,
                     triangle: "bottom",
                 });
                 break;
             case "left" :
                 this._rotateObject(triangle, -90);
                 triangle.set({
-                    left: 0,
+                    left: 1,
                     top: rectDefaultHalfHeight + triangleWidth * 0.5,
                     triangle: "left"
                 });
@@ -106,7 +111,7 @@ var ToolTip = function () {
             case "right" :
                 this._rotateObject(triangle, 90);
                 triangle.set({
-                    left: rectDefaultWidth,
+                    left: rectDefaultWidth + triangleHeight,
                     top: rectDefaultHalfHeight - triangleWidth * 0.5,
                     triangle: "right"
                 });
@@ -116,14 +121,15 @@ var ToolTip = function () {
     };
     this._create = function(options) {
         //TODO make height slightly more then text height
-        var roundRect = new fabric.Rect({
+        roundRect = new fabric.Rect({
             top: this._calculateRectTop(),
             left: this._calculateRectLeft(),
-            width: this._calculateRectWidth(),
-            height: this._calculateRectHeight(),
+            width: rectDefaultWidth,
+            height: rectDefaultHeight,
             rx: angle,
             ry: angle,
-            fill: defaultColor
+            fill: defaultColor,
+            noScaleCache: false
         });
 
         var merged = [];
@@ -132,8 +138,7 @@ var ToolTip = function () {
 
         var text = new fabric.Textbox(options.text, {
             width: roundRect.width - textPadding * 2,
-            height: roundRect.height ,
-            top: roundRect.top + textPadding,
+            height: roundRect.height - textPadding * 2,
             left: roundRect.left + textPadding,
             fontSize: textSize,
             textAlign: 'center',
@@ -141,13 +146,19 @@ var ToolTip = function () {
             fill: "white"
         });
 
+        this.alingTextVertically(text);
+
+        text.on('changed', this._textChanged);
+
         var group = new fabric.Group([roundRect].concat(triangles).concat([text]), {
             left: options.left,
             top: options.top,
             lockUniScaling: true
         });
 
-         return group;
+        canvas.renderAll();
+
+        return group;
     };
     this.createLeft = function(options) {
         this.addTriangle("left");

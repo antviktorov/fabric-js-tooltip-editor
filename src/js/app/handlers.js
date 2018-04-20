@@ -10,12 +10,11 @@ function init() {
 
 function getSplitActiveObject() {
     var object = canvas.getActiveObject();
-    var objects = object.getObjects();
     return {
-        triangle: objects[0],
-        rect: objects[1],
-        caption: objects[2]
-    }
+        triangle: object.getObjects('triangle')[0],
+        rect: object.getObjects("rect")[0],
+        caption: object.getObjects("textbox")[0]
+    };
 }
 
 function disablePanel() {
@@ -53,6 +52,7 @@ function enablePanel() {
     $(".form-control").on("keyup", function (e) {
         var objects = getSplitActiveObject();
         objects.caption.set("text", e.target.value);
+        objects.caption.fire("changed", {target: objects.caption});
         canvas.renderAll();
     });
 
@@ -156,26 +156,20 @@ function toogleStyle(object, style) {
     } else {
         objects.caption.set({fontStyle: style});
         deactivateStyle();
-        $(object).addClass('active')
+        $(object).addClass('active');
     }
 }
 
 function showTextarea() {
-    $(".text-container").show(500); /*.animate({
-        opacity: 1,
-        height: "100%"
-    }, 1000);*/
+    $(".text-container").show(500);
 }
 
 function hideTextarea() {
-    $(".text-container").hide(500); /*.animate({
-        opacity: 0,
-        height: "0%"
-    }, 500);*/
+    $(".text-container").hide(500);
 }
 
 function listeners() {
-    // Set event listeners
+    // Canvas event listeners
     canvas.on({
         "object:selected": function () {
             enablePanel();
@@ -191,6 +185,9 @@ function listeners() {
         }
     });
 
+    /**
+     * Add tooltip buttons.
+     */
     $(".btn-add").on("click", function () {
         var toolTip = new ToolTip();
         var group;
@@ -246,11 +243,11 @@ function listeners() {
 
         if ($(this).hasClass('btn-underline')) {
             if ($(this).hasClass('active')) {
-                objects.caption.set({underline: false})
-                $(this).removeClass('active')
+                objects.caption.set({underline: false});
+                $(this).removeClass('active');
             } else {
-                objects.caption.set({underline: true})
-                $(this).addClass('active')
+                objects.caption.set({underline: true});
+                $(this).addClass('active');
             }
         }
 
@@ -261,8 +258,6 @@ function listeners() {
         utils.deleteSelected();
     });
 }
-
-/* ----- exports ----- */
 
 function HandlersModule() {
     if (!(this instanceof HandlersModule)) return new HandlersModule();
@@ -299,6 +294,15 @@ function HandlersModule() {
      canvas.on("object:statechange", function () {
      //state.save();
      });*/
+
+    /*canvas.on('text:changed', function(opt) {
+        console.log(opt);
+        var t1 = opt.target;
+        if (t1.width > t1.fixedWidth) {
+            t1.fontSize *= t1.fixedWidth / (t1.width + 1);
+            t1.width = t1.fixedWidth;
+        }
+    });*/
 }
 
 module.exports = HandlersModule;

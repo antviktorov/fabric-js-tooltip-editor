@@ -310,7 +310,7 @@ function deleteSelected() {
     var objects = canvas.getActiveObjects();
     if (objects !== null) {
         objects.forEach(function (object) {
-            canvas.remove(object)
+            canvas.remove(object);
         });
     }
 }
