@@ -100,8 +100,8 @@ gulp.task('x-sass', function () {
 // copy supporting files
 gulp.task('x-copy', function () {
 
-    //var images = gulp.src(['src/images/**/*'])
-     //   .pipe(gulp.dest('build/images'));
+    var images = gulp.src(['src/images/**/*'])
+        .pipe(gulp.dest('build/images'));
 
     var css = gulp.src(['src/css/lib/*.css'])
         .pipe(gulp.dest('build/css/lib'));
@@ -121,7 +121,7 @@ gulp.task('x-copy', function () {
     var html = gulp.src(['src/html/*'])
         .pipe(gulp.dest('build'));
 
-    return merge(/*images,*/bootstrapCss, bootstrapColorPicker, bootstrapJs, css, js, html);
+    return merge(images,bootstrapCss, bootstrapColorPicker, bootstrapJs, css, js, html);
 });
 
 // minify assets

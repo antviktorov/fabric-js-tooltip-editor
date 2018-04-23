@@ -70,5 +70,31 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 <script type="text/javascript" src="js/lib/bootstrap.bundle.min.js"></script>
 <script defer src="https://use.fontawesome.com/releases/v5.0.9/js/all.js" integrity="sha384-8iPTk2s/jMVj81dnzb/iFR2sdA7u06vHJyyLlAd4snFpCl/SnyUjRrbdJsw1pGIl" crossorigin="anonymous"></script>
+<script type="text/javascript">
+    $(document).ready(function() {
+        (function() {
+            fabric.Image.fromURL('./images/car-smaller.jpg', function(car) {
+                var image = car.set(
+                        {
+                            left: 0,
+                            top: 0,
+                            width: 1000,
+                            height: 707,
+                            lockMovementX: true,
+                            lockMovementY: true,
+                            lockScalingX: true,
+                            lockScalingY: true,
+                            lockUniScaling: true,
+                            lockRotation: true,
+                        }
+                );
+                canvas.add(image);
+                canvas.setWidth(1000);
+                canvas.setHeight(707);
+            });
+
+        })();
+    });
+</script>
 </body>
 </html>
