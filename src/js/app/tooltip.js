@@ -36,7 +36,9 @@ var ToolTip = function () {
         var angle = obj.angle + angleOffset;
 
         if ((obj.originX !== 'center' || obj.originY !== 'center') && obj.centeredRotation) {
-            obj.setOriginToCenter();
+            if (obj.setOriginToCenter) {
+                obj.setOriginToCenter();
+            }
             resetOrigin = true;
         }
 
@@ -45,7 +47,7 @@ var ToolTip = function () {
         obj.set({angle: angle});
         obj.setCoords();
 
-        if (resetOrigin) {
+        if (resetOrigin && obj.setCenterToOrigin) {
             obj.setCenterToOrigin();
         }
 
