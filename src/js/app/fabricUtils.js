@@ -231,7 +231,7 @@ function getImageBounds(fitToCanvas) {
 // includes shadows
 function getObjBounds(obj) {
     var bounds = obj.getBoundingRect();
-    var shadow = obj.getShadow();
+    var shadow = obj.shadow;
 
     if (shadow !== null) {
         var blur = shadow.blur;

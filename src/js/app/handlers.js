@@ -73,6 +73,15 @@ function enablePanel() {
         });
 }
 
+function isTooltipActive()
+{
+    var objects = getSplitActiveObject();
+    if (objects && objects.triangle && objects.rect && objects.caption) {
+        return true;
+    }
+    return false;
+}
+
 function initPanel() {
     //Set triangle position
     var objects = getSplitActiveObject();
@@ -183,6 +192,9 @@ function listeners() {
     // Canvas event listeners
     canvas.on({
         "object:selected": function () {
+            if (!isTooltipActive()) {
+                return;
+            }
             enablePanel();
             initPanel();
             showTextarea();
@@ -269,6 +281,10 @@ function listeners() {
 
     $(".btn-remove").on("click", function () {
         utils.deleteSelected();
+    });
+
+    $(".btn-export").on("click", function () {
+       utils.exportFile('jpg');
     });
 }
 
