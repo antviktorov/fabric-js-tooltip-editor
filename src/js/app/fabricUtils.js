@@ -7,7 +7,7 @@
  ----------------- */
 
 var canvas = global.canvas;
-//var filesaver = require('../lib/filesaver.min.js');
+var filesaver = require('../lib/filesaver.min.js');
 
 function selectAll(objs) {
     canvas.discardActiveObject();
@@ -303,7 +303,7 @@ function exportFile(fileType) {
     }
 
     // Save file
-    //filesaver.saveAs(blob, "design." + fileType);
+    filesaver.saveAs(blob, "design." + fileType);
 }
 
 function deleteSelected() {
@@ -346,37 +346,6 @@ function insertSvg(url, loader) {
 
         loader.addClass("noshow");
     });
-}
-
-function getActiveStyle(styleName, object) {
-    object = object || canvas.getActiveObject();
-
-    if (typeof object !== 'object' || object === null) {
-        return '';
-    }
-
-    // Don't change part of text
-    /*
-     return (object.getSelectionStyles && object.isEditing) ? (object.getSelectionStyles()[styleName] || '') : (object[styleName] || '');
-     */
-
-    return (object[styleName] || '');
-}
-
-function setActiveStyle(styleName, value, object) {
-    object = object || canvas.getActiveObject();
-
-    // Don't change part of text
-    /*
-     if (object.setSelectionStyles && object.isEditing) {
-     var style = { };
-     style[styleName] = value;
-     object.setSelectionStyles(style);
-     } else {
-     object[styleName] = value;
-     }
-     */
-    object[styleName] = value;
 }
 
 function getFillColor() {
@@ -574,8 +543,6 @@ function UtilsModule() {
 }
 
 UtilsModule.prototype.selectAll = selectAll;
-UtilsModule.prototype.sendGroupBackward = sendGroupBackward;
-UtilsModule.prototype.sendGroupForward = sendGroupForward;
 UtilsModule.prototype.exportFile = exportFile;
 UtilsModule.prototype.getImageBounds = getImageBounds;
 UtilsModule.prototype.deleteSelected = deleteSelected;
@@ -589,8 +556,6 @@ UtilsModule.prototype.getFillColor = getFillColor;
 UtilsModule.prototype.setFillColor = setFillColor;
 UtilsModule.prototype.getOutlineColor = getOutlineColor;
 UtilsModule.prototype.setOutlineColor = setOutlineColor;
-UtilsModule.prototype.getFontSize = getFontSize;
-UtilsModule.prototype.setFontSize = setFontSize;
 UtilsModule.prototype.getFont = getFont;
 UtilsModule.prototype.setFont = setFont;
 UtilsModule.prototype.setShadow = setShadow;

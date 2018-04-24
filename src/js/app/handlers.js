@@ -223,6 +223,7 @@ function listeners() {
         }
 
         if (group) {
+            utils.setShadow('rgba(0,0,0,0.3)', 10, 5, 5, group);
             canvas.add(group);
         }
     });
