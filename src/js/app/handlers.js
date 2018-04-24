@@ -160,6 +160,17 @@ function toogleStyle(object, style) {
     }
 }
 
+function getCanvasCenter() {
+    var position = $(".canvas-container").position();
+    position.left *= -1;
+    position.top *= -1;
+    position.left += $(".canvas-wrapper-container").width();
+    position.top += $(".canvas-wrapper-container").height();
+    position.left *= 0.5;
+    position.top *= 0.5;
+    return position;
+}
+
 function showTextarea() {
     $(".text-container").show(500);
 }
@@ -192,22 +203,23 @@ function listeners() {
         var toolTip = new ToolTip();
         var group;
 
-        var defaultText = "Tooltip Hint";
+        var position = getCanvasCenter();
+        position.text = "Tooltip Hint";
 
         if ($(this).hasClass("btn-add-top")) {
-            group = toolTip.createTop({top: 200, left: 100, text: defaultText});
+            group = toolTip.createTop(position);
         }
 
         if ($(this).hasClass("btn-add-down")) {
-            group = toolTip.createBottom({top: 200, left: 100, text: defaultText});
+            group = toolTip.createBottom(position);
         }
 
         if ($(this).hasClass("btn-add-left")) {
-            group = toolTip.createLeft({top: 200, left: 100, text: defaultText});
+            group = toolTip.createLeft(position);
         }
 
         if ($(this).hasClass("btn-add-right")) {
-            group = toolTip.createRight({top: 200, left: 100, text: defaultText});
+            group = toolTip.createRight(position);
         }
 
         if (group) {
